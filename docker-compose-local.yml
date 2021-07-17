@@ -1,0 +1,9 @@
+version: '3'
+services:
+  flask:
+    build:
+      context: ./docker/flask
+    volumes:
+      - ./src:/usr/src/app
+    ports:
+      - "80:80"
