@@ -4,6 +4,18 @@
 	<meta charset="utf-8">
 	<title>flask first page</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+	<style>
+	.result-section{
+		height: 200px;
+		max-height: 200px;
+		overflow: auto;
+	}
+	.result-section-alt{
+		height: 100px;
+		max-height: 200px;
+		overflow: auto;
+	}
+	</style>
 </head>
 <body>
 <div class="row text-center m-5 border-bottom">
@@ -14,20 +26,85 @@
 		<div class="col-md-6">
 	      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 	        <div class="col p-4 d-flex flex-column position-static">
-	          <h3 class="mb-5">Sentiment Analysis</h3>
-	          <div class="d-flex justify-content-between">
-	          	<div class="">
-	          		<p class="mb-auto">copy your text here:</p>
-	          	</div>
-	          	<div class="">
-	          		<button id="btn-sentiment" class="btn btn-success">
-	          			let's try!
-	          		</button>
-	          	</div>
-	          </div>
-	          <textarea id="input-sentiment" class="my-3"></textarea>
-	          result:
-	          <div id="result-sentiment"></div>
+			<h3 class="mb-5">Sentiment Analysis</h3>
+			<div class="d-flex justify-content-between">
+				<div class="">
+					<p class="mb-auto">copy your text here:</p>
+				</div>
+				<div class="">
+					<button id="btn-sentiment" class="btn btn-success">
+						let's try!
+					</button>
+				</div>
+			</div>
+			<textarea id="input-sentiment" class="my-3"></textarea>
+			result:
+			<div id="result-sentiment" class="result-section"></div>
+	        </div>
+	      </div>
+	    </div>
+	    <div class="col-md-6">
+	      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+	        <div class="col p-4 d-flex flex-column position-static">
+			<h3 class="mb-5">Entity Analysis</h3>
+			<div class="d-flex justify-content-between">
+				<div class="">
+					<p class="mb-auto">copy your text here:</p>
+				</div>
+				<div class="">
+					<button id="btn-entity" class="btn btn-success">
+						let's try!
+					</button>
+				</div>
+			</div>
+			<textarea id="input-entity" class="my-3"></textarea>
+			result:
+			<div id="result-entity" class="result-section"></div>
+	        </div>
+	      </div>
+	    </div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+	      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+	        <div class="col p-4 d-flex flex-column position-static">
+			<h3 class="mb-5">Sammarization Analysis</h3>
+			<div class="d-flex justify-content-between">
+				<div class="">
+					<p class="mb-auto">copy your text here:</p>
+				</div>
+				<div class="">
+					<button id="btn-sammarization" class="btn btn-success">
+						let's try!
+					</button>
+				</div>
+			</div>
+			<textarea id="input-sammarization" class="my-3"></textarea>
+			result:
+			<div id="result-sammarization" class="result-section"></div>
+	        </div>
+	      </div>
+	    </div>
+	    <div class="col-md-6">
+	      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+	        <div class="col p-4 d-flex flex-column position-static">
+			<h3 class="mb-5">Question Analysis</h3>
+			<div class="d-flex justify-content-between">
+				<div class="">
+					<p class="mb-auto">copy your text here:</p>
+				</div>
+				<div class="">
+					<button id="btn-question" class="btn btn-success">
+						let's try!
+					</button>
+				</div>
+			</div>
+			question input:
+			<textarea id="input-question-q" class="my-3"></textarea>
+			answer input:
+			<textarea id="input-question-a" class="my-3"></textarea>
+			result:
+			<div id="result-question" class="result-section-alt"></div>
 	        </div>
 	      </div>
 	    </div>
@@ -40,7 +117,7 @@
 $(document).ready(function(){
 	// alert('hi')
 	$('#btn-sentiment').click(function(){
-		let payload = $('#input-sentiment').val()
+		let req = $('#input-sentiment').val()
 		$.ajax({
 			url:'/sentiment',
 			method:'POST',
@@ -48,7 +125,7 @@ $(document).ready(function(){
 				'Accept':'application/json',
 				'Content-Type':'application/json'
 			},
-			data:JSON.stringify({payload:payload}),
+			data:JSON.stringify({payload:req}),
 			success:function(data){
 				$('#result-sentiment').html(data.message)
 			},

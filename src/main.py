@@ -3,6 +3,7 @@ from flask import render_template
 from logging.config import dictConfig
 from flask import request
 from flask import jsonify
+from google.cloud import language_v1
 
 dictConfig({
     'version': 1,
@@ -33,5 +34,12 @@ def hello():
 @app.route('/sentiment',methods=['POST'])
 def sentiment():
     if request.method == 'POST':
-        response = {"message":request.get_json()['payload']}
+
+        client = language_v1.LanguageServiceClient()
+        document = language_v1.Document(content=request.get_json()['payload'], type_=language_v1.Document.Type.PLAIN_TEXT)
+        sentiment = client.analyze_sentiment(request={'document': document}).document_sentiment
+        # print("Text: {}".format(text))
+        print("Sentiment: {}, {}".format(sentiment.score, sentiment.magnitude))
+        resp = "Sentiment: " + str(sentiment.score) + ", " + str(sentiment.magnitude)
+        response = {"message":resp}
         return jsonify(response)
