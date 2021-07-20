@@ -88,21 +88,19 @@
 	    <div class="col-md-6">
 	      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 	        <div class="col p-4 d-flex flex-column position-static">
-			<h3 class="mb-5">Question Analysis</h3>
+			<h3 class="mb-5">Classific</h3>
 			<div class="d-flex justify-content-between">
 				<div class="">
 					<p class="mb-auto">copy your text here:</p>
 				</div>
 				<div class="">
-					<button id="btn-question" class="btn btn-success">
+					<button id="btn-Classific" class="btn btn-success">
 						let's try!
 					</button>
 				</div>
 			</div>
 			question input:
-			<textarea id="input-question-q" class="my-3"></textarea>
-			answer input:
-			<textarea id="input-question-a" class="my-3"></textarea>
+			<textarea id="input-Classific" class="my-3"></textarea>
 			result:
 			<div id="result-question" class="result-section-alt"></div>
 	        </div>
@@ -128,6 +126,46 @@ $(document).ready(function(){
 			data:JSON.stringify({payload:req}),
 			success:function(data){
 				$('#result-sentiment').html(data.message)
+			},
+			error:function(data){
+			}
+		})
+	})
+});
+$(document).ready(function(){
+	// alert('btn-entity')
+	$('#btn-entity').click(function(){
+		let req = $('#input-entity').val()
+		$.ajax({
+			url:'/entity',
+			method:'POST',
+			headers:{
+				'Accept':'application/json',
+				'Content-Type':'application/json'
+			},
+			data:JSON.stringify({payload:req}),
+			success:function(data){
+				$('#result-entity').html(data.message)
+			},
+			error:function(data){
+			}
+		})
+	})
+});
+$(document).ready(function(){
+	// alert('btn-class')
+	$('#btn-Classific').click(function(){
+		let req = $('#input-Classific').val()
+		$.ajax({
+			url:'/class',
+			method:'POST',
+			headers:{
+				'Accept':'application/json',
+				'Content-Type':'application/json'
+			},
+			data:JSON.stringify({payload:req}),
+			success:function(data){
+				$('#result-entity').html(data.message)
 			},
 			error:function(data){
 			}

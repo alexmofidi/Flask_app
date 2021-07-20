@@ -43,3 +43,40 @@ def sentiment():
         resp = "Sentiment: " + str(sentiment.score) + ", " + str(sentiment.magnitude)
         response = {"message":resp}
         return jsonify(response)
+
+@app.route('/entity',methods=['POST'])
+def entity():
+    if request.method == 'POST':
+
+        client = language_v1.LanguageServiceClient()
+        type_ = language_v1.Document.Type.PLAIN_TEXT
+        language = "en"
+        document = language_v1.Document(content=request.get_json()['payload'], type_=language_v1.Document.Type.PLAIN_TEXT, language= language)
+        encoding_type = language_v1.EncodingType.UTF8
+        response = client.analyze_entities(request = {'document': document, 'encoding_type': encoding_type})
+        resp=''
+        for entity in response.entities:
+            resp += "Entity: {}".format(entity.name) +"\t" + "Entity type: {}".format(language_v1.Entity.Type(entity.type_).name) + "\n"
+
+        print("Entity:  {}".format(resp))
+        response = {"message":resp}
+        return jsonify(response)
+
+@app.route('/class',methods=['POST'])
+def classify():
+    if request.method == 'POST':
+
+        client = language_v1.LanguageServiceClient()
+        type_ = language_v1.Document.Type.PLAIN_TEXT
+
+        language = "en"
+        document = language_v1.Document(content=request.get_json()['payload'], type_=language_v1.Document.Type.PLAIN_TEXT, language= language)
+        encoding_type = language_v1.EncodingType.UTF8
+        response = client.classify_text(request = {'document': document})
+        resp=''
+        for category in response.categories:
+            resp+= u"Category name: {}".format(category.name)  + "\t" + "Confidence: {}".format(category.confidence)  + "\n"
+
+        print("Class:  {}".format(resp))
+        response = {"message":resp}
+        return jsonify(response)
