@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="row text-center m-5 border-bottom">
-	<h1>AI tooltip</h1>
+	<h1>Welcome to the NLP playground</h1>
 </div>
 <div class="container">
 	<div class="row">
@@ -59,16 +59,16 @@
 			</div>
 			<textarea id="input-entity" class="my-3"></textarea>
 			result:
+			<pre>
 			<div id="result-entity" class="result-section"></div>
+			<pre>
 	        </div>
 	      </div>
 	    </div>
-	</div>
-	<div class="row">
-		<div class="col-md-6">
+	    <div class="col-md-6">
 	      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 	        <div class="col p-4 d-flex flex-column position-static">
-			<h3 class="mb-5">Sammarization Analysis</h3>
+			<h3 class="mb-5">Summarization</h3>
 			<div class="d-flex justify-content-between">
 				<div class="">
 					<p class="mb-auto">copy your text here:</p>
@@ -81,28 +81,32 @@
 			</div>
 			<textarea id="input-sammarization" class="my-3"></textarea>
 			result:
-			<div id="result-sammarization" class="result-section"></div>
+			<pre>
+                        <div id="result-sammarization" class="result-section"></div>
+			<pre>
 	        </div>
 	      </div>
 	    </div>
 	    <div class="col-md-6">
 	      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 	        <div class="col p-4 d-flex flex-column position-static">
-			<h3 class="mb-5">Classific</h3>
+			<h3 class="mb-5">Classification</h3>
 			<div class="d-flex justify-content-between">
-				<div class="">
-					<p class="mb-auto">copy your text here:</p>
+                                <div class="">
+					<p class="mb-auc"> copy your text here: <p>
 				</div>
+
 				<div class="">
 					<button id="btn-Classific" class="btn btn-success">
 						let's try!
 					</button>
 				</div>
 			</div>
-			question input:
 			<textarea id="input-Classific" class="my-3"></textarea>
 			result:
-			<div id="result-question" class="result-section-alt"></div>
+			<pre>
+			<div id="result-class" class="result-section"></div>
+			<pre>
 	        </div>
 	      </div>
 	    </div>
@@ -165,7 +169,27 @@ $(document).ready(function(){
 			},
 			data:JSON.stringify({payload:req}),
 			success:function(data){
-				$('#result-entity').html(data.message)
+				$('#result-class').html(data.message)
+			},
+			error:function(data){
+			}
+		})
+	})
+});
+$(document).ready(function(){
+	// alert('hi')
+	$('#btn-sammarization').click(function(){
+		let req = $('#input-sammarization').val()
+		$.ajax({
+			url:'/summerize',
+			method:'POST',
+			headers:{
+				'Accept':'application/json',
+				'Content-Type':'application/json'
+			},
+			data:JSON.stringify({payload:req}),
+			success:function(data){
+				$('#result-sammarization').html(data.message)
 			},
 			error:function(data){
 			}
